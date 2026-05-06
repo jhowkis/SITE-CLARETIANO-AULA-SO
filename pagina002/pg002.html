@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula02</title>
+    <link rel="stylesheet" href="../estilo2.css">
+</head>
+<body>
+    <header>
+<h1>Sistemas Operacionais</h1>
+<p> Gerenciamento de memória - Aula 02</p>
+    </header>
+    <nav>
+      <ul>
+    <li><a href="../index.html">HOME</a></li>
+        <li><a href="../pagina002/pg002.html">PAG.2</a></li>
+        <li><a href="../pagina003/pag003.html">PAG.3</a></li>
+        <li><a href="../pagina004/pag004.html">PAG.4</a></li>
+        </ul>  
+    </nav>
+<main>
+<section>
+    <h2>Atribuição de Endereços de Memória (Address Binding)</h2>
+    <p>Para que um programa rode, suas variáveis e instruções precisam receber endereços físicos na RAM.
+    Esse mapeamento pode ocorrer em três momentos:</p>
+    <ul>
+    <li><strong>Em tempo de compilação:</strong> Se já soubermos exatamente onde o programa vai ficar na RAM, o
+    código compilado já recebe endereços físicos absolutos.
+    <li><strong>Em tempo de carga:</strong> O compilador gera um "código relocalizável". O endereço final só é amarrado no momento em que o Sistema Operacional carrega o programa na memória para abri-lo.
+    <li><strong></strong>Em tempo de execução:</strong> O programa pode ser movido de um lugar para outro na memória RAM enquanto está a rodar. Para que isso funcione, o sistema exige um hardware especial
+    chamado MMU (Memory Management Unit), responsável por traduzir os endereços lógicos em endereços físicos em tempo real. Como a Tabela de Páginas usada nessa tradução fica armazenada na própria RAM, cada busca exigiria dois acessos físicos à memória (um para ler a
+    tabela e outro para ler o dado em si), tornando o sistema lento. Para resolver esse gargalo, a
+    MMU utiliza a TLB (Translation Lookaside Buffer), uma memória cache ultrarrápida e exclusiva que guarda as traduções de endereços mais recentes, eliminando a necessidade da
+    dupla consulta e acelerando drasticamente o processo de paginação.
+
+
+</ul>
+</section>
+
+<section>
+<h2>Tipos de Gerenciamento de Memória</h2>
+<p>O Gerenciador de Memória do SO adota estratégias que se dividem, basicamente, em dois grupos:</p>
+
+<ul>
+    <li><STRONG>Processos fixos na memória principal:</STRONG> O programa é carregado na RAM e <mark> fica no mesmo lugar</mark>, sem interrupções, até o usuário fechá-lo.
+    <li><STRONG>Processos móveis (Uso de Disco/RAM):</STRONG> O SO move os processos <mark> dinamicamente </mark> entre a memória principal e a memória secundária (disco) durante a execução, utilizando técnicas como Swapping ou Paginação.
+</ul>
+</section>
+
+<section>
+<h2>Monoprogramação (Sem Swapping ou Paginação)</h2>
+<p>O modelo mais primitivo (Monoprogramação): Neste formato, a RAM é dividida em apenas duas partes: uma reservada ao Sistema Operacional e a outra dedicada a um único programa de usuário por vez.</p>
+    <ul>
+    <li><em>O Problema:</em> Gera um desperdício massivo de recursos físicos. Se o programa for maior que a RAM, ele não roda. Além disso, caso o programa precise aguardar uma ação do usuário (operações de I/O), a CPU fica 100% ociosa, pois não há outro processo na fila para aproveitar o processador.
+    <li><em>Uso Atual:</em> Tornou-se totalmente obsoleto para computadores pessoais modernos, mas ainda é amplamente utilizado em sistemas embarcados simples, como calculadoras e painéis de micro-ondas.</ul>
+<img src="monoprogramacao.gif" alt="Diagrama na monoprogramação">
+
+
+<details>
+<summary>O que fragmentação interna? </summary>
+<p> Ocorre quando o espaço de memória alocado para um processo é maior do que o processo realmente precisa. O espaço que sobra fica "preso" dentro da partição do processo e não pode ser usado por mais ninguém.</p>
+</details>
+
+<details>
+<summary>O que fragmentação externa?</summary>
+<p> Ocorre quando existe espaço total suficiente na memória RAM para abrir um novo programa, mas esse espaço está <mark>espalhado</mark> em vários pequenos "buracos" não contíguos (separados). Como o processo exige um bloco inteiro contínuo, o SO não consegue alocá-lo e acusa falta de memória.    </p>
+</details>
+
+
+
+
+
+</section>
+
+
+
+
+
+</main>
+
+
+
+<footer>Prof. Jonatas Ferreira - CLARETIANO 2026</footer>
+</body>
+</html>

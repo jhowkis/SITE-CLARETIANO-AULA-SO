@@ -1,0 +1,123 @@
+/* Paleta de cores Versao 0 - 29.04.2026
+Site para Criar PALETA HARMONICA
+https://color.adobe.com/pt/create/color-wheel
+https://paletton.com/
+*/
+:root {
+
+  /* Criar variaveis para armazenar as cores da paleta*/
+  --cor0: #e3f5f7; /*Fundo do site*/
+  --cor1: #b3dde3;
+  --cor2: #81bdc5;
+  --cor3: #52969f;
+  --cor4: #337c86;
+  --cor-branco: #F0F4F8;
+
+  /*Aplicar as cores no layout do site*/
+
+  --cor-fundo-site: var(--cor-branco) ; 
+  --cor-texto-padrao: #222222; 
+  --cor-header-bg: var(--cor2);   /* O azul médio fica perfeito no Header */
+  --cor-nav-bg: var(--cor-branco);    /* O menu inativo fica branco */
+  --cor-nav-ativo: var(--cor3);   /* A aba ativa ganha um azul um pouco mais forte */
+  --cor-borda: var(--cor2);       /* Bordas sutis usando o segundo tom mais claro */
+  
+}
+
+/* Reset básico: remove margens/padds nativos e ajusta o cálculo
+de tamanho dos elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--cor-fundo-site);
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--cor-texto-padrao);
+  text-align: justify;
+  line-height: 1.6; /* espaçamento entre as linhas*/
+  padding: 30px; /* espaçamento interno para o conteúdo */
+}
+
+main {
+  padding: 30px;
+  gap: 30px;
+}
+
+
+
+mark {
+  background-color: var(--cor1);
+  border-radius: 5px; /* Ajuste o valor para mais ou menos arredondado */
+  padding: 2px 5px;   /* adicione um pequeno padding para a cor não "grudar" no texto */
+}
+
+header {
+  
+  background-color: var(--cor-header-bg);
+  padding: 15px 30px 40px 30px;
+  border-radius: 10px;
+  color: var(--cor-branco);
+  margin-bottom: 5px;
+}
+
+header h1 {
+  color: var(--cor5);
+  font-size: 20px;
+}
+
+header h2 {
+  color: var(--cor3);
+  font-size: 16px;
+}
+
+nav {
+  border-top: 2px solid var(--cor-borda);
+  background-color: var(--cor1);
+  border-radius: 10px;
+  
+   
+ }
+
+nav a {
+  text-decoration-line: none;
+  color: var(--cor5);
+  text-decoration: none;
+  font-weight: bolder;
+  transition: 0.3s;
+ }
+
+nav a:hover{
+color:var(--cor3);
+
+
+}
+
+nav ul {
+  justify-content:center;
+  list-style-type: none;
+  display: flex;
+  padding: 2px;
+  margin: 1px;
+ }
+nav li{
+  padding: 2px 60px;
+  margin: 1px;
+/*  2px acima e abaixo  */
+/*  60px esquerda e direita  */
+
+}
+
+
+footer {
+  background-color: var(--cor1);
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border-top: 2px solid var(--cor-borda);
+}
+
+

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aula 03</title>
+    <link rel="stylesheet" href="../estilo2.css">
+    <link
+      rel="shortcut icon"
+      href="../Imagens/favicon/favicon_memoryram.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Sistemas Operacionais</h1>
+      <p>Gerenciamento de memória - Aula 03</p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="../index.html">HOME</a></li>
+        <li><a href="../pagina002/pg002.html">PAG.2</a></li>
+        <li><a href="../pagina003/pag003.html">PAG.3</a></li>
+        <li><a href="../pagina004/pag004.html">PAG.4</a></li>
+      </ul>
+    </nav>
+    <main>
+      <section>
+        <h2>Rastreamento de Memória Livre (O "Mapa" do SO)</h2>
+        <p>
+          Na multiprogramação com partições variáveis, a memória torna-se um
+          mosaico de processos ativos e "buracos" (espaços vazios) intercalados.
+          Para que o Sistema Operativo consiga alocar um novo programa de forma
+          eficiente, ele deve monitorizar constantemente a localização e o
+          tamanho destes espaços. Para isso, utilizam-se duas estruturas de
+          dados principais:
+        </p>
+
+        <ol type="I">
+          <li>
+            <strong>Mapa de Bits "Bitmaps"</strong>: Nesta abordagem, a memória
+            é dividida em pequenas unidades de alocação (que podem variar de
+            alguns bytes a kilobytes). O SO mantém um registo binário onde cada
+            unidade é representada por um único bit:
+            <ul>
+              <li><em>0</em>: Indica que a unidade está Livre (Buraco).</li>
+              <li>
+                <em>1</em>: Indica que a unidade está Ocupada (Processo).
+                <ul>
+                  <li>
+                    <em>Vantagem:</em> É uma estrutura extremamente simples e de
+                    tamanho fixo.
+                  </li>
+                  <li>
+                    <em>Desvantagem:</em> A busca por um espaço contíguo grande
+                    exige que o SO percorra a tabela à procura de uma sequência
+                    longa de zeros, o que se torna computacionalmente lento em
+                    memórias extensas.
+                  </li>
+                  <li><em>Mapa de Bits: 1111 00 111 0000000</em>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li><strong>Listas Encadeadas (Linked Lists):</strong>Considerado um método mais sofisticado e eficiente para memórias dinâmicas, o SO mantém uma lista de "nós" (elos) conectados. Cada nó descreve um segmento contínuo da memória, contendo obrigatoriamente três informações:
+            <ul>
+              <li>Tipo: Se o segmento é um Processo (P) ou um Buraco (H - Hole).
+              <li> Endereço: Onde o bloco começa na RAM.
+              <li>Comprimento: O tamanho total do bloco.
+                  <ul>
+                     <li> <em>Vantagem:</em> A atualização é muito mais rápida. Quando um processo termina, o SO apenas altera o tipo do nó de P para H e, se houver buracos vizinhos, funde-os num único nó grande. Além disso, facilita a execução de algoritmos como First-Fit ou Best-Fit.
+                     <li> <em>Exemplo Prático de Lista Encadeada:</em> Usando o mesmo cenário acima (Processo A de 4 unidades no início, seguido de um buraco de 2 unidades e o Processo B de 3 unidades): (P, 0, 4) ➔ (H, 4, 2) ➔ (P, 6, 3) ➔ (H, 9, 7)   
+                  </ul>
+            </ol>
+
+
+          </li>
+         
+        </ul>
+      </section>
+<section>
+<h2>Estratégias de Posicionamento de Memória</h2>
+<figure>
+  <img src="../Imagens/alocacao_memoria.png" alt="Diagrama dos três tipos de algoritmos">
+  <figcaption> Figura 01: Alocação de Memoria</figcaption>
+</figure>
+<p>Na multiprogramação, após mapear os espaços livres na RAM (usando Bitmaps ou Listas Encadeadas), o Sistema Operativo enfrenta um novo desafio: quando um novo programa é aberto, em qual dos vários "buracos" vazios ele deve ser colocado? Para tomar esta decisão de forma automatizada, o SO utiliza algoritmos de alocação.</p>
+<p><em>Nota Técnica: O que é um Algoritmo neste contexto? Um algoritmo é uma sequência finita de passos lógicos ou regras programadas no núcleo do Sistema Operativo. O seu objetivo aqui é varrer a estrutura de dados que mapeia a memória (como a lista encadeada) e calcular, com base no tamanho do processo e nos espaços disponíveis, o local exato onde o programa será carregado.</em></p>
+
+<p>Existem três algoritmos clássicos para realizar este posicionamento:</p>
+<ul>
+<li><strong>First-Fit (Primeiro Encaixe):</strong> O algoritmo varre a lista de espaços livres desde o início e aloca o programa no primeiro buraco que for suficientemente grande.
+  <ul><li>Característica: É o método mais rápido e simples, pois a busca é interrompida assim que um espaço válido é encontrado, não sendo necessário ler a lista inteira.</ul>
+  <li><strong>Best-Fit (Melhor Encaixe):</strong> Este algoritmo procura o buraco que tenha o tamanho mais exato possível (o menor espaço onde o programa consiga caber).
+    <ul><li>Característica: A sua intenção é não desperdiçar grandes espaços vazios. No entanto, é mais lento (exige a leitura de toda a lista) e, paradoxalmente, gera o pior tipo de fragmentação externa: ao deixar sobras muito pequenas, cria dezenas de "mini-buracos" inúteis onde nenhum outro processo conseguirá entrar.</ul>
+    <li><strong>Worst-Fit (Pior Encaixe):</strong> Funciona de forma diametralmente oposta ao Best-Fit. Ele varre toda a memória para encontrar deliberadamente o maior buraco disponível e coloca lá o programa.
+      <ul><li>
+      Característica: A ideia por trás desta estratégia é que a "sobra" de memória após a alocação ainda seja um bloco grande o suficiente para acomodar outro programa útil, tentando evitar a criação dos "mini-buracos" do Best-Fit.</ul>
+      <li><strong>Afinal, qual é o melhor algoritmo?</strong>
+        <ul><li>Apesar do nome sugestivo, o First-Fit é considerado o melhor algoritmo na prática. Simulações clássicas de Sistemas Operativos (como demonstrado por Tanenbaum) provam que o First-Fit ganha por ser muito mais rápido de executar e por manter uma taxa de aproveitamento de memória incrivelmente boa e equilibrada. O Best-Fit perde por ser lento e fragmentar demasiado a memória a longo prazo, enquanto o Worst-Fit apresenta quase sempre o pior desempenho global nos testes reais.</ul>
+</section>
+
+
+
+
+    </main>
+    <footer>Prof. Jonatas Ferreira - CLARETIANO 2026</footer>
+  </body>
+</html>
